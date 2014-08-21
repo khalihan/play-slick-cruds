@@ -1,30 +1,17 @@
-# Ignore all dotfiles...
-.*
-# except for .gitignore
-!.gitignore
-
-target/
-!pics-web/src/main/webapp/v7/js/extjs/pics/extjs/src/fx/target
-/bin
-*.iml
+*.class
 *.log
-*.log.1
-*.tmp
-*.bak
-*.jtl
-*.hprof
-rebel.xml
-rebel-remote.xml
 
-/css
-/ie7
-/images
-/js
-/struts
-/v7
-junitExcelBuilderTest.xls
+# sbt specific
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
 
-/pics-web/src/main/webapp/angular/coverage/*
-/pics-web/src/main/webapp/angular/unit.xml
-/pics-web/src/main/webapp/employee-guard/coverage/*
-/pics-web/src/main/webapp/employee-guard/unit.xml
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
