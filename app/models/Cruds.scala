@@ -31,7 +31,7 @@ trait CrudComponent {
       query.list
     }
 
-    def queryById(id: PK)(implicit session: Session) = query.filter(_.id === id.bind)
+    def queryById(id: PK)(implicit session: Session) = query.filter(_.id === id)
 
     def findOne(id: PK)(implicit session: Session): Option[E] = queryById(id).firstOption
 
