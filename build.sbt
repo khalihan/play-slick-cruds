@@ -31,7 +31,6 @@ libraryDependencies ++= {
   val slickVersion = "2.1.0"
   Seq(
     // WebJars pull in client-side web libraries
-    jdbc,
     "com.typesafe.play" %% "play" % playVersion,
     "com.typesafe.slick" %% "slick" % slickVersion,
     "com.typesafe.play" %% "play-slick"  %  "0.8.0",

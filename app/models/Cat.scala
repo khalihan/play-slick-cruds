@@ -2,6 +2,9 @@ package models
 
 import play.api.db.slick._
 
+import scala.slick.dao.{CRUDable, AbstractDAO}
+import scala.slick.driver.JdbcProfile
+
 
 //import models.cruds.{CrudComponent, IdentifiableTable}
 //import play.api.db.slick.Profile
@@ -38,11 +41,53 @@ trait CatComponent extends CrudComponent{
     def * = (id.?, name, color) <> (Cat.tupled, Cat.unapply _)
   }
 
+  trait ICatDao extends AbstractDAO with CRUDable[CatsTable, Long] {
+
+    val entities: TableQuery[CatsTable] = TableQuery[CatsTable]
+
+    def selectBy(entity: Cat) = {
+      for (e <- entities if e.id === entity.id) yield e
+    }
+
+    def selectById(id: Long) = {
+      for (e <- entities if e.id === id) yield e
+    }
+
+    private val allQuery = Compiled{ name: Column[String] =>
+      for{ e <- entities if e.name === name } yield e
+    }
+
+    def getByName(name: String): List[Cat] = {
+      //for (e <- entities if e.name === name) yield e
+      allQuery(name).run.toList
+    }
+
+  }
+
+  class CatDao(override val profile: JdbcProfile)(implicit session: Session) extends ICatDao  with Profile {
+   // override val profile: JdbcProfile = _
+  }
+
+
+
+
   class CatRepository extends Crud[CatsTable, Cat, Long] {
 
     override val query = TableQuery[CatsTable]
 
     override def withId(cat: Cat, id: Long)(implicit session: Session): Cat = cat.copy(id = Option(id))
+
+    private val allQuery = Compiled{ name: Column[String] =>
+      for{ e <- query if e.name === name } yield e
+    }
+
+
+    def getByName(name: String)(implicit session: Session): List[Cat] = {
+       allQuery(name).run.toList
+    }
+
+
+
   }
 
 }

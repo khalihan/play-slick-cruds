@@ -8,7 +8,9 @@ GET            /                    controllers.Application.index
 # Home page
 POST           /insert              controllers.Application.insert
 
-GET            /get/:id                 controllers.Application.get(id: Long)
+GET            /get/:id             controllers.Application.get(id: Long)
+
+GET            /getbyname/:name                 controllers.Application.getByName(name: String)
 
 GET            /list                controllers.Application.listCats
 GET            /company/:id         controllers.Application.get(id:Long)

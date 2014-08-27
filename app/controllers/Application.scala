@@ -26,6 +26,10 @@ object Application extends Controller{
   }
 
 
+  def getByName(name: String) = DBAction{ implicit rs =>
+    Ok(toJson(dao2.getByName(name)))
+  }
+
   def get(id: Long) =  DBAction{ implicit rs =>
       Ok(toJson(catR.findOne(id)))
   }
