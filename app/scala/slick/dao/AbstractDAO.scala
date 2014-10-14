@@ -16,7 +16,6 @@ import scala.slick.driver.JdbcDriver.simple._
 abstract class AbstractDAO(implicit innerSession: Session) {
   this: Profile =>
   import profile.simple._
-  //val profile: JdbcProfile = DBConnection.profile
   val session: Session = innerSession
 }
 
