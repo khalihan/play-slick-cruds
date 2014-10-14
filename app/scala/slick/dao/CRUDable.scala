@@ -3,8 +3,8 @@ package scala.slick.dao
 import scala.slick.lifted.{AbstractTable, TableQuery}
 import play.api.db.slick.Profile
 
-import scala.slick.driver.JdbcDriver.simple._
-//import DBConnection.profile.simple._
+
+import DBConnection.profile.simple._
 
 /**
  * Created by Dmytro_Kovalskyi on 11.03.14.

@@ -10,7 +10,7 @@ POST           /insert              controllers.Application.insert
 
 GET            /get/:id             controllers.Application.get(id: Long)
 
-GET            /getbyname/:name                 controllers.Application.getByName(name: String)
+GET            /getbynamex/:name                 controllers.Application.getByName(name: String)
 
 GET            /list                controllers.Application.listCats
 GET            /company/:id         controllers.Application.get(id:Long)

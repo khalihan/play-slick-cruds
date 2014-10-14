@@ -1,10 +1,9 @@
 package dao
 
-import models.{Cat, CatComponent}
+import models.CatComponent
 import play.api.db.slick._
 
 import scala.slick.driver.JdbcProfile
-import scala.slick.lifted.TableQuery
 
 
 
@@ -14,11 +13,8 @@ import scala.slick.lifted.TableQuery
  */
 class DAO(override val profile: JdbcProfile) extends CatComponent with Profile {
 
-  val Cats = TableQuery[CatsTable]
-
-  val catR = new CatRepository
   private implicit def session = profile.backend.Database.forDataSource(DB(play.api.Play.current).datasource).createSession()
-  val dao2 = new CatDao(profile)
+  val catDao = new CatDao(profile)
 
 }
 

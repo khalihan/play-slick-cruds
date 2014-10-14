@@ -26,8 +26,8 @@ class DBSpec extends Specification {
           Cat(Some(2), "garfield", "orange"),
           Cat(Some(3), "creme puff", "grey")
         )
-        Cats.insertAll( testKitties: _*)
-        Cats.list must equalTo(testKitties)
+        catDao.insertAll( testKitties: _*)
+        catDao.findAll() must equalTo(testKitties)
       }
     }
 

@@ -1,6 +1,7 @@
 package controllers
 
-import dao.current
+
+import dao.Company
 import models._
 import play.api.Play.current
 import play.api.data.Forms._
@@ -11,32 +12,36 @@ import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc._
 //stable imports to use play.api.Play.current outside of objects:
 import dao.current.dao._
-
-
+import dao.DaoFactory._
 
 object Application extends Controller{
   def index = DBAction { implicit rs =>
-    Ok(views.html.index(catR.findAll))
+    Ok(views.html.index(catDao.findAll))
    // Ok(toJson(Cats.list))
   }
 
   def listCats =  DBAction { implicit rs =>
 
-    Ok(toJson(catR.findAll))
+    Ok(toJson(catDao.findAll))
   }
 
 
   def getByName(name: String) = DBAction{ implicit rs =>
-    Ok(toJson(dao2.getByName(name)))
+    Ok(toJson(getCompanyDao.getByName(name)))
   }
 
+  def getByNamex(name: String) =
+    Ok(toJson(catDao.getByName(name)))
+
+
+
   def get(id: Long) =  DBAction{ implicit rs =>
-      Ok(toJson(catR.findOne(id)))
+      Ok(toJson(getCompanyDao.findById(id)))
   }
 
   def insert = DBAction{ implicit rs =>
     val cat = catForm.bindFromRequest.get
-    catR.add(cat)
+    catDao.insert(cat)
     //Cats.insert(cat)
     Redirect(routes.Application.index)
   }
@@ -67,7 +72,7 @@ object Application extends Controller{
       Json.obj(
         "id" ->   cat.id.toString,
         "name" -> cat.name,
-        "color" -> cat.color
+        "city" -> cat.color
       )
     }
   }

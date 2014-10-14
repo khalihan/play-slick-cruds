@@ -4,12 +4,12 @@ import play.api.db.slick._
 
 import scala.slick.dao.{CRUDable, AbstractDAO}
 import scala.slick.driver.JdbcProfile
-
+//import scala.slick.dao.DBConnection.profile.simple._
 
 //import models.cruds.{CrudComponent, IdentifiableTable}
 //import play.api.db.slick.Profile
 
-case class Cat(id: Option[Long], name: String, color: String) extends Entity[Long]
+case class Cat(id: Option[Long], name: String, color: String)
 
 /**
  * This Cat component contains the database representation of your
@@ -29,14 +29,14 @@ case class Cat(id: Option[Long], name: String, color: String) extends Entity[Lon
  * we imagine we have multiple different databases for production
  * and tests
  */
-trait CatComponent extends CrudComponent{
+trait CatComponent {
   this: Profile => //<- step 1: you must add this "self-type"
   import profile.simple._ //<- step 2: then import the correct Table, ... from the profile
 
-  class CatsTable(tag: Tag) extends Table[Cat](tag, "CAT") with IdentifiableTable[Long] {
-    override def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+  class CatsTable(tag: Tag) extends Table[Cat](tag, "accounts") {
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name", O.PrimaryKey)
-    def color = column[String]("color", O.NotNull)
+    def color = column[String]("city", O.NotNull)
 
     def * = (id.?, name, color) <> (Cat.tupled, Cat.unapply _)
   }
@@ -58,36 +58,11 @@ trait CatComponent extends CrudComponent{
     }
 
     def getByName(name: String): List[Cat] = {
-      //for (e <- entities if e.name === name) yield e
       allQuery(name).run.toList
     }
 
   }
 
-  class CatDao(override val profile: JdbcProfile)(implicit session: Session) extends ICatDao  with Profile {
-   // override val profile: JdbcProfile = _
-  }
-
-
-
-
-  class CatRepository extends Crud[CatsTable, Cat, Long] {
-
-    override val query = TableQuery[CatsTable]
-
-    override def withId(cat: Cat, id: Long)(implicit session: Session): Cat = cat.copy(id = Option(id))
-
-    private val allQuery = Compiled{ name: Column[String] =>
-      for{ e <- query if e.name === name } yield e
-    }
-
-
-    def getByName(name: String)(implicit session: Session): List[Cat] = {
-       allQuery(name).run.toList
-    }
-
-
-
-  }
+  class CatDao(override val profile: JdbcProfile)(implicit session: Session) extends ICatDao  with Profile
 
 }
