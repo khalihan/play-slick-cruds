@@ -1,6 +1,5 @@
 package controllers
 
-import dao.current
 import models._
 import play.api.Play.current
 import play.api.data.Forms._
@@ -10,9 +9,8 @@ import play.api.libs.json.Json._
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc._
 //stable imports to use play.api.Play.current outside of objects:
+import dao.company_current.compdao._
 import dao.current.dao._
-
-
 
 object Application extends Controller{
   def index = DBAction { implicit rs =>
@@ -31,7 +29,7 @@ object Application extends Controller{
   }
 
   def get(id: Long) =  DBAction{ implicit rs =>
-      Ok(toJson(catR.findOne(id)))
+      Ok(toJson(compR.findOne(id)))
   }
 
   def insert = DBAction{ implicit rs =>
